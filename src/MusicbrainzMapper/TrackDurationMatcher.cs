@@ -1,13 +1,62 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
+using Npgsql;
+using NpgsqlTypes;
 
 namespace MusicbrainzMapper
 {
-    public class TrackDurationMatcher: ITrackDurationMatcher
+    public class TrackDurationMatcher: ITrackDurationMatcher, IDisposable
     {
+        private NpgsqlConnection _connection;
+
+        public TrackDurationMatcher()
+        {
+            _connection = new NpgsqlConnection("Server=10.0.10.119;Port=5432;User Id=musicbrainz;Password=musicbrainz;Database=musicbrainz_db;");
+        }
+
         public async Task<IList<string>> FindMatchesAsync(IList<int> trackDuration)
         {
-            return new List<string>();
+            var result = new List<string>();
+            try
+            {
+                await _connection.OpenAsync();
+
+                using (var command = new NpgsqlCommand(@"SELECT r.gid as release_id
+                FROM medium m
+                    JOIN tracklist t ON t.id = m.tracklist
+                    JOIN tracklist_index ti ON ti.tracklist = t.id
+                    JOIN release r ON m.release = r.id
+                WHERE toc <@ create_bounding_cube(:track_durations, 5000)
+                    AND track_count = :number_tracks;
+            ", _connection))
+                {
+                    var trackDurations = new NpgsqlParameter("track_durations",
+                                                             NpgsqlDbType.Array | NpgsqlDbType.Integer);
+                    var numberTracks = new NpgsqlParameter("number_tracks", NpgsqlDbType.Integer);
+                    command.Parameters.Add(trackDurations);
+                    command.Parameters.Add(numberTracks);
+                    command.Parameters[0].Value = trackDuration;
+                    command.Parameters[1].Value = trackDuration.Count;
+
+                    var reader = await command.ExecuteReaderAsync();
+
+                    while (await reader.ReadAsync())
+                    {
+                        result.Add(reader.GetString(0));
+                    }
+                }
+            }
+            finally
+            {
+                _connection.Close();
+            }
+            return result;
+        }
+
+        public void Dispose()
+        {
         }
     }
 }

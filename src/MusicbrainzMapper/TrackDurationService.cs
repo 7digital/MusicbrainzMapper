@@ -20,7 +20,7 @@ namespace MusicbrainzMapper
                                                  .PleaseAsync();
 
             return releaseTracks.Tracks
-                .Select(track => track.Duration)
+                .Select(track => track.Duration * 1000)
                 .ToArray();
         }
     }

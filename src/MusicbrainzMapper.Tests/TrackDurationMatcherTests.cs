@@ -10,7 +10,7 @@ namespace MusicbrainzMapper.Tests
         public async void TrackDurationMatcherFetchesNonNullForNonNullInput()
         {
             var matcher = new TrackDurationMatcher();
-            var matches = await matcher.FindMatchesAsync(new List<int>());
+            var matches = await matcher.FindMatchesAsync(new [] {1, 2, 3});
 
             Assert.That(matches, Is.Not.Null);
         }
