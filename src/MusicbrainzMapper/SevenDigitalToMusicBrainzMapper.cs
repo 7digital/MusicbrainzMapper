@@ -5,9 +5,9 @@ namespace MusicbrainzMapper
 {
     public class SevenDigitalToMusicBrainzMapper
     {
-        public async Task<IList<int>> MapAsync(int idToMap)
+        public async Task<IList<string>> MapAsync(int idToMap)
         {
-            return new List<int>();
+            return new List<string>();
         }
     }
 }
