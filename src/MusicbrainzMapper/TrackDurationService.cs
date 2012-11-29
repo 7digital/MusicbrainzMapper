@@ -15,11 +15,13 @@ namespace MusicbrainzMapper
     {
         public async Task<IList<int>> GetAsync(int releaseId)
         {
-            var tracks = await Api<ReleaseTracks>.Create
+            var releaseTracks = await Api<ReleaseTracks>.Create
                                                  .ForReleaseId(releaseId)
                                                  .PleaseAsync();
 
-            return tracks.Tracks.Select(track => track.Duration).ToArray();
+            return releaseTracks.Tracks
+                .Select(track => track.Duration)
+                .ToArray();
         }
     }
 }
