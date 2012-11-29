@@ -3,6 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicbrainzMapper", "src\MusicbrainzMapper\MusicbrainzMapper.csproj", "{4EA09A8C-6BA1-4BAA-B57F-ED00B570EFE9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{BFB871D1-1CAE-4618-A795-5632AD4491EF}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicbrainzMapper.Tests", "src\MusicbrainzMapper.Tests\MusicbrainzMapper.Tests.csproj", "{AA6B3DD5-0991-4DA2-A298-273BDFFA2100}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -13,6 +22,10 @@ Global
 		{4EA09A8C-6BA1-4BAA-B57F-ED00B570EFE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4EA09A8C-6BA1-4BAA-B57F-ED00B570EFE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4EA09A8C-6BA1-4BAA-B57F-ED00B570EFE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA6B3DD5-0991-4DA2-A298-273BDFFA2100}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA6B3DD5-0991-4DA2-A298-273BDFFA2100}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA6B3DD5-0991-4DA2-A298-273BDFFA2100}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA6B3DD5-0991-4DA2-A298-273BDFFA2100}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
