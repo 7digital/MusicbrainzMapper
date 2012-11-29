@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using NSubstitute;
+using NUnit.Framework;
 
 namespace MusicbrainzMapper.Tests
 {
@@ -8,7 +9,9 @@ namespace MusicbrainzMapper.Tests
         [Test]
         public void WhenMappingA7digitalReleaseidIGetAListOfMusicbrainzids()
         {
-            var mapper = new SevenDigitalToMusicBrainzMapper();
+            var trackDurationService = Substitute.For<ITrackDurationService>();
+
+            var mapper = new SevenDigitalToMusicBrainzMapper(trackDurationService);
             const int sevenDigitalReleaseId = 12345;
 
             var result = mapper.MapAsync(sevenDigitalReleaseId);
