@@ -22,12 +22,12 @@ namespace MusicbrainzMapper.Tests
             _mapper = new SevenDigitalToMusicBrainzMapper(_trackDurationService);
         }
 
-        [Test, Ignore("async mocking is hard")]
+        [Test]
         public async void TrackDurationServiceIsCalledOnce()
         {
             await _mapper.MapAsync(SevenDigitalReleaseId);
 
-            await _trackDurationService.Received().GetAsync(Arg.Any<int>());
+            _trackDurationService.Received().GetAsync(Arg.Any<int>());
         }
 
         [Test]
