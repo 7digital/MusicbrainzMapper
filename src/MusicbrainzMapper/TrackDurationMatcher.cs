@@ -42,11 +42,12 @@ namespace MusicbrainzMapper
                 command.Parameters[0].Value = trackDuration;
                 command.Parameters[1].Value = trackDuration.Count;
 
-                var reader = await command.ExecuteReaderAsync();
-
-                while (await reader.ReadAsync())
+                using (var reader = await command.ExecuteReaderAsync())
                 {
-                    result.Add(reader.GetGuid(0));
+                    while (await reader.ReadAsync())
+                    {
+                        result.Add(reader.GetGuid(0));
+                    }
                 }
             }
             return result;
