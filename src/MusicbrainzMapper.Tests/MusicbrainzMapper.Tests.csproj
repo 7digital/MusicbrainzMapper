@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MapperTests.cs" />
+    <Compile Include="MusicbrainzMapperIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TrackDurationMatcherTests.cs" />
     <Compile Include="TrackDurationServiceTests.cs" />
