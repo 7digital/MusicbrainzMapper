@@ -9,7 +9,15 @@ namespace MusicbrainzMapper
 {
     public class TrackDurationMatcher: ITrackDurationMatcher, IDisposable
     {
-        private NpgsqlConnection _connection;
+        private readonly NpgsqlConnection _connection;
+        private const string _query = @"SELECT r.gid as release_id
+                FROM medium m
+                    JOIN tracklist t ON t.id = m.tracklist
+                    JOIN tracklist_index ti ON ti.tracklist = t.id
+                    JOIN release r ON m.release = r.id
+                WHERE toc <@ create_bounding_cube(:track_durations, 5000)
+                    AND track_count = :number_tracks;
+            ";
 
         public TrackDurationMatcher()
         {
@@ -25,15 +33,7 @@ namespace MusicbrainzMapper
             }
 
             var result = new List<Guid>();
-            using (var command = new NpgsqlCommand(@"SELECT r.gid as release_id
-                FROM medium m
-                    JOIN tracklist t ON t.id = m.tracklist
-                    JOIN tracklist_index ti ON ti.tracklist = t.id
-                    JOIN release r ON m.release = r.id
-                WHERE toc <@ create_bounding_cube(:track_durations, 5000)
-                    AND track_count = :number_tracks;
-            ",
-                _connection))
+            using (var command = new NpgsqlCommand(_query, _connection))
             {
                 var trackDurations = new NpgsqlParameter("track_durations",
                                                             NpgsqlDbType.Array | NpgsqlDbType.Integer);
