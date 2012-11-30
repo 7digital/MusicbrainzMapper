@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace MusicbrainzMapper.Tests
@@ -14,5 +15,14 @@ namespace MusicbrainzMapper.Tests
 
             Assert.That(matches, Is.Not.Null);
         }
+
+        [Test]
+        [ExpectedException(typeof (ArgumentException))]
+        public async void EmptyTrackDurationListThrowsException()
+        {
+            var matcher = new TrackDurationMatcher();
+            var matches = await matcher.FindMatchesAsync(new int[0]);
+        }
+
     }
 }
