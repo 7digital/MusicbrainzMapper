@@ -20,8 +20,13 @@ namespace MusicbrainzMapper
                                                  .PleaseAsync();
 
             return releaseTracks.Tracks
-                .Select(track => track.Duration * 1000)
+                .Select(track => ConvertSecondsToMilliSeconds(track.Duration))
                 .ToArray();
+        }
+
+        private static int ConvertSecondsToMilliSeconds(int duration)
+        {
+            return duration * 1000;
         }
     }
 }
