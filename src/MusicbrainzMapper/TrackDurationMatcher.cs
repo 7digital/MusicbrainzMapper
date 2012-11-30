@@ -45,8 +45,8 @@ namespace MusicbrainzMapper
             }
 
             var result = new List<Guid>();
-            _command.Parameters[0].Value = trackDuration;
-            _command.Parameters[1].Value = trackDuration.Count;
+            _command.Parameters["track_durations"].Value = trackDuration;
+            _command.Parameters["number_tracks"].Value = trackDuration.Count;
 
             using (var reader = await _command.ExecuteReaderAsync())
             {
