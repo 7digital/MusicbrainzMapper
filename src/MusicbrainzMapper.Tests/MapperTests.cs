@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using NSubstitute;
 using NUnit.Framework;
@@ -23,7 +24,7 @@ namespace MusicbrainzMapper.Tests
 
             _trackDurationMatcher = Substitute.For<ITrackDurationMatcher>();
             _trackDurationMatcher.FindMatchesAsync(Arg.Any<IList<int>>())
-                .Returns(Task.FromResult((IList<string>) new List<string>()));
+                .Returns(Task.FromResult((IList<Guid>) new List<Guid>()));
 
             _mapper = new SevenDigitalToMusicBrainzMapper(_trackDurationService, _trackDurationMatcher);
         }

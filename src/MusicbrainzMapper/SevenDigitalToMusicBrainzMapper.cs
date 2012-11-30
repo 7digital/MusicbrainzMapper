@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace MusicbrainzMapper
             _trackDurationMatcher = trackDurationMatcher;
         }
 
-        public async Task<IList<string>> MapAsync(int idToMap)
+        public async Task<IList<Guid>> MapAsync(int idToMap)
         {
             var tracksDuration = await _trackDurationService.GetAsync(idToMap);
             var matches = await _trackDurationMatcher.FindMatchesAsync(tracksDuration);

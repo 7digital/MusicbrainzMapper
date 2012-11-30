@@ -17,14 +17,14 @@ namespace MusicbrainzMapper
             _connection.Open();
         }
 
-        public async Task<IList<string>> FindMatchesAsync(IList<int> trackDuration)
+        public async Task<IList<Guid>> FindMatchesAsync(IList<int> trackDuration)
         {
             if (trackDuration.Count == 0)
             {
                 throw new ArgumentException("Cannot match empty track duration list.");
             }
 
-            var result = new List<string>();
+            var result = new List<Guid>();
             using (var command = new NpgsqlCommand(@"SELECT r.gid as release_id
                 FROM medium m
                     JOIN tracklist t ON t.id = m.tracklist
@@ -47,7 +47,7 @@ namespace MusicbrainzMapper
 
                 while (await reader.ReadAsync())
                 {
-                    result.Add(reader.GetString(0));
+                    result.Add(reader.GetGuid(0));
                 }
             }
             return result;
