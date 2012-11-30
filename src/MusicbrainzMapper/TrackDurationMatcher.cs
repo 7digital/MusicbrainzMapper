@@ -14,12 +14,15 @@ namespace MusicbrainzMapper
 
         private static readonly NpgsqlParameter TrackDurations = new NpgsqlParameter("track_durations", NpgsqlDbType.Array | NpgsqlDbType.Integer);
         private static readonly NpgsqlParameter NumberTracks = new NpgsqlParameter("number_tracks", NpgsqlDbType.Integer);
+        private static readonly NpgsqlParameter Fuzziness = new NpgsqlParameter("fuzziness", NpgsqlDbType.Integer);
+        private const int FuzinessFactor = 5000;
+
         private const string Query = @"SELECT r.gid as release_id
                 FROM medium m
                     JOIN tracklist t ON t.id = m.tracklist
                     JOIN tracklist_index ti ON ti.tracklist = t.id
                     JOIN release r ON m.release = r.id
-                WHERE toc <@ create_bounding_cube(:track_durations, 5000)
+                WHERE toc <@ create_bounding_cube(:track_durations, :fuzziness)
                     AND track_count = :number_tracks;";
 
         public TrackDurationMatcher()
@@ -30,6 +33,8 @@ namespace MusicbrainzMapper
             _command = new NpgsqlCommand(Query, _connection);
             _command.Parameters.Add(TrackDurations);
             _command.Parameters.Add(NumberTracks);
+            _command.Parameters.Add(Fuzziness);
+            _command.Parameters["fuzziness"].Value = FuzinessFactor;
         }
 
         public async Task<IList<Guid>> FindMatchesAsync(IList<int> trackDuration)
