@@ -13,6 +13,7 @@ namespace MusicbrainzMapper
 
         private static readonly NpgsqlParameter TrackDurations = new NpgsqlParameter("track_durations", NpgsqlDbType.Array | NpgsqlDbType.Integer);
         private static readonly NpgsqlParameter NumberTracks = new NpgsqlParameter("number_tracks", NpgsqlDbType.Integer);
+        private readonly NpgsqlCommand _command;
 
         private const string Query = @"SELECT r.gid as release_id
                 FROM medium m
@@ -26,6 +27,7 @@ namespace MusicbrainzMapper
         {
             _connection = new NpgsqlConnection("Server=10.0.10.119;Port=5432;User Id=musicbrainz;Password=musicbrainz;Database=musicbrainz_db;");
             _connection.Open();
+            _command = new NpgsqlCommand(Query, _connection);
         }
 
         public async Task<IList<Guid>> FindMatchesAsync(IList<int> trackDuration)
@@ -36,19 +38,16 @@ namespace MusicbrainzMapper
             }
 
             var result = new List<Guid>();
-            using (var command = new NpgsqlCommand(Query, _connection))
-            {
-                command.Parameters.Add(TrackDurations);
-                command.Parameters.Add(NumberTracks);
-                command.Parameters[0].Value = trackDuration;
-                command.Parameters[1].Value = trackDuration.Count;
+            _command.Parameters.Add(TrackDurations);
+            _command.Parameters.Add(NumberTracks);
+            _command.Parameters[0].Value = trackDuration;
+            _command.Parameters[1].Value = trackDuration.Count;
 
-                using (var reader = await command.ExecuteReaderAsync())
+            using (var reader = await _command.ExecuteReaderAsync())
+            {
+                while (await reader.ReadAsync())
                 {
-                    while (await reader.ReadAsync())
-                    {
-                        result.Add(reader.GetGuid(0));
-                    }
+                    result.Add(reader.GetGuid(0));
                 }
             }
             return result;
@@ -56,6 +55,7 @@ namespace MusicbrainzMapper
 
         public void Dispose()
         {
+            _command.Dispose();
             _connection.Dispose();
         }
     }
