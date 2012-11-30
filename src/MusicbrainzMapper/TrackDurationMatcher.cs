@@ -10,11 +10,10 @@ namespace MusicbrainzMapper
     public class TrackDurationMatcher: ITrackDurationMatcher, IDisposable
     {
         private readonly NpgsqlConnection _connection;
+        private readonly NpgsqlCommand _command;
 
         private static readonly NpgsqlParameter TrackDurations = new NpgsqlParameter("track_durations", NpgsqlDbType.Array | NpgsqlDbType.Integer);
         private static readonly NpgsqlParameter NumberTracks = new NpgsqlParameter("number_tracks", NpgsqlDbType.Integer);
-        private readonly NpgsqlCommand _command;
-
         private const string Query = @"SELECT r.gid as release_id
                 FROM medium m
                     JOIN tracklist t ON t.id = m.tracklist
@@ -27,7 +26,10 @@ namespace MusicbrainzMapper
         {
             _connection = new NpgsqlConnection("Server=10.0.10.119;Port=5432;User Id=musicbrainz;Password=musicbrainz;Database=musicbrainz_db;");
             _connection.Open();
+
             _command = new NpgsqlCommand(Query, _connection);
+            _command.Parameters.Add(TrackDurations);
+            _command.Parameters.Add(NumberTracks);
         }
 
         public async Task<IList<Guid>> FindMatchesAsync(IList<int> trackDuration)
@@ -38,8 +40,6 @@ namespace MusicbrainzMapper
             }
 
             var result = new List<Guid>();
-            _command.Parameters.Add(TrackDurations);
-            _command.Parameters.Add(NumberTracks);
             _command.Parameters[0].Value = trackDuration;
             _command.Parameters[1].Value = trackDuration.Count;
 
