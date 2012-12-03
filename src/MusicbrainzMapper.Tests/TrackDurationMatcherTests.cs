@@ -9,6 +9,7 @@ namespace MusicbrainzMapper.Tests
     public class TrackDurationMatcherTests: AsyncSanityTest
     {
         private TrackDurationMatcher _matcher;
+        private readonly int[] _validTrackDurations = new[] { 1, 2, 3 };
 
         [SetUp]
         public void Setup()
@@ -28,7 +29,7 @@ namespace MusicbrainzMapper.Tests
         [ExpectedException(typeof (ArgumentException))]
         public async void EmptyTrackDurationListThrowsException()
         {
-            var matches = await _matcher.FindMatchesAsync(new int[0]);
+            await _matcher.FindMatchesAsync(new int[0]);
         }
 
         [TearDown]
@@ -44,7 +45,7 @@ namespace MusicbrainzMapper.Tests
 
         private async Task<IList<Guid>> GetMatches()
         {
-            return await _matcher.FindMatchesAsync(new[] { 1, 2, 3 });
+            return await _matcher.FindMatchesAsync(_validTrackDurations);
         }
 
     }
