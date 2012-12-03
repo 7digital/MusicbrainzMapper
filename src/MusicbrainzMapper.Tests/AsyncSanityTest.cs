@@ -7,7 +7,7 @@ namespace MusicbrainzMapper.Tests
     public abstract class AsyncSanityTest
     {
         [Test, Explicit]
-        public async void AreYouAsync()
+        public async void TaskCreationIsQuickerThanExecution()
         {
             var stopwatch = Stopwatch.StartNew();
             var taskEndTimeTask = ToTest().ContinueWith(task => stopwatch.ElapsedTicks);
