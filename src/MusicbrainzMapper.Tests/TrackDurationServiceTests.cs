@@ -8,6 +8,7 @@ namespace MusicbrainzMapper.Tests
     [TestFixture]
     public class TrackDurationServiceTests : AsyncSanityTest
     {
+        private const int ValidReleaseId = 12345;
         private TrackDurationService _service;
 
         [SetUp]
@@ -30,7 +31,7 @@ namespace MusicbrainzMapper.Tests
         {
             const int invalidReleaseId = 0;
 
-            var trackDurations = await _service.GetAsync(invalidReleaseId);
+            await _service.GetAsync(invalidReleaseId);
         }
 
         protected async override Task ToTest()
@@ -40,9 +41,7 @@ namespace MusicbrainzMapper.Tests
 
         private async Task<IList<int>> GetTrackDurations()
         {
-            const int releaseId = 12345;
-
-            return await _service.GetAsync(releaseId);
+            return await _service.GetAsync(ValidReleaseId);
         }
     }
 }
