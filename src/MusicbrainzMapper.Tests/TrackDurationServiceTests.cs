@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
 using SevenDigital.Api.Wrapper.Exceptions;
 
 namespace MusicbrainzMapper.Tests
@@ -25,6 +26,27 @@ namespace MusicbrainzMapper.Tests
             var service = new TrackDurationService();
 
             var trackDurations = await service.GetAsync(invalidReleaseId);
+        }
+
+        [Test]
+        public async void AreYouAsync()
+        {
+            const int releaseId = 12345;
+            var service = new TrackDurationService();
+
+            var referenceTime = DateTime.Now;
+            var taskCompletedTimeTask = service.GetAsync(releaseId).ContinueWith(task => DateTime.Now);
+            var taskSpecifiedTime = DateTime.Now;
+
+            var taskCompletedTime = await taskCompletedTimeTask;
+
+            var taskCreationDelta = taskSpecifiedTime - referenceTime;
+            var taskCompletedDelta = taskCompletedTime - taskSpecifiedTime;
+
+            Assert.That(referenceTime, Is.LessThan(taskSpecifiedTime));
+            Assert.That(referenceTime, Is.LessThan(taskCompletedTime));
+            Assert.That(taskSpecifiedTime, Is.LessThan(taskCompletedTime));
+            Assert.That(taskCreationDelta, Is.LessThan(taskCompletedDelta));
         }
     }
 }
