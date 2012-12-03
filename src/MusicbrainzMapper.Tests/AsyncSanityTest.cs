@@ -6,7 +6,7 @@ namespace MusicbrainzMapper.Tests
 {
     public abstract class AsyncSanityTest
     {
-        [Test]
+        [Test, Explicit]
         public async void AreYouAsync()
         {
             var stopwatch = Stopwatch.StartNew();
