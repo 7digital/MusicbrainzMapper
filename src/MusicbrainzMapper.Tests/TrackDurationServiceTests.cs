@@ -1,11 +1,11 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using NUnit.Framework;
 using SevenDigital.Api.Wrapper.Exceptions;
 
 namespace MusicbrainzMapper.Tests
 {
     [TestFixture]
-    public class TrackDurationServiceTests
+    public class TrackDurationServiceTests : AsyncSanityTest
     {
         [Test]
         public async void TrackDurationServiceGetsTrackDurationsForASevenDigitalRelease()
@@ -28,25 +28,12 @@ namespace MusicbrainzMapper.Tests
             var trackDurations = await service.GetAsync(invalidReleaseId);
         }
 
-        [Test]
-        public async void AreYouAsync()
+        protected async override Task ToTest()
         {
-            const int releaseId = 12345;
+            const int invalidReleaseId = 12345;
             var service = new TrackDurationService();
 
-            var referenceTime = DateTime.Now;
-            var taskCompletedTimeTask = service.GetAsync(releaseId).ContinueWith(task => DateTime.Now);
-            var taskSpecifiedTime = DateTime.Now;
-
-            var taskCompletedTime = await taskCompletedTimeTask;
-
-            var taskCreationDelta = taskSpecifiedTime - referenceTime;
-            var taskCompletedDelta = taskCompletedTime - taskSpecifiedTime;
-
-            Assert.That(referenceTime, Is.LessThan(taskSpecifiedTime));
-            Assert.That(referenceTime, Is.LessThan(taskCompletedTime));
-            Assert.That(taskSpecifiedTime, Is.LessThan(taskCompletedTime));
-            Assert.That(taskCreationDelta, Is.LessThan(taskCompletedDelta));
+            var trackDurations = await service.GetAsync(invalidReleaseId);
         }
     }
 }
