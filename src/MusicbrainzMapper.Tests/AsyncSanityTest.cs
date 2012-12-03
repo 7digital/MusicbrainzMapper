@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
@@ -9,19 +10,16 @@ namespace MusicbrainzMapper.Tests
         [Test]
         public async void AreYouAsync()
         {
-            var referenceTime = DateTime.Now;
-            var taskCompletedTimeTask = ToTest().ContinueWith(task => DateTime.Now);
-            var taskSpecifiedTime = DateTime.Now;
+            var stopwatch = Stopwatch.StartNew();
+            var taskEndTimeTask = ToTest().ContinueWith(task => stopwatch.ElapsedTicks);
+            var taskStartTime = stopwatch.ElapsedTicks;
 
-            var taskCompletedTime = await taskCompletedTimeTask;
+            var taskEndTime = await taskEndTimeTask;
+            stopwatch.Stop();
 
-            var taskCreationDelta = taskSpecifiedTime - referenceTime;
-            var taskCompletedDelta = taskCompletedTime - taskSpecifiedTime;
+            var taskRunTime = taskEndTime - taskStartTime;
 
-            Assert.That(referenceTime, Is.LessThan(taskSpecifiedTime));
-            Assert.That(referenceTime, Is.LessThan(taskCompletedTime));
-            Assert.That(taskSpecifiedTime, Is.LessThan(taskCompletedTime));
-            Assert.That(taskCreationDelta, Is.LessThan(taskCompletedDelta));
+            Assert.That(taskStartTime, Is.LessThan(taskRunTime));
         }
 
         protected abstract Task ToTest();

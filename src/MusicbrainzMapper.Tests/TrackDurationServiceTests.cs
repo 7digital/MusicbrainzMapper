@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using NUnit.Framework;
 using SevenDigital.Api.Wrapper.Exceptions;
 
@@ -7,13 +8,18 @@ namespace MusicbrainzMapper.Tests
     [TestFixture]
     public class TrackDurationServiceTests : AsyncSanityTest
     {
+        private TrackDurationService _service;
+
+        [SetUp]
+        public void Setup()
+        {
+            _service = new TrackDurationService();
+        }
+
         [Test]
         public async void TrackDurationServiceGetsTrackDurationsForASevenDigitalRelease()
         {
-            const int releaseId = 12345;
-            var service = new TrackDurationService();
-
-            var trackDurations = await service.GetAsync(releaseId);
+            var trackDurations = await GetTrackDurations();
 
             Assert.That(trackDurations, Is.Not.Null);
         }
@@ -23,17 +29,20 @@ namespace MusicbrainzMapper.Tests
         public async void InvalidReleaseIdReturnsException()
         {
             const int invalidReleaseId = 0;
-            var service = new TrackDurationService();
 
-            var trackDurations = await service.GetAsync(invalidReleaseId);
+            var trackDurations = await _service.GetAsync(invalidReleaseId);
         }
 
         protected async override Task ToTest()
         {
-            const int invalidReleaseId = 12345;
-            var service = new TrackDurationService();
+            await GetTrackDurations();
+        }
 
-            var trackDurations = await service.GetAsync(invalidReleaseId);
+        private async Task<IList<int>> GetTrackDurations()
+        {
+            const int releaseId = 12345;
+
+            return await _service.GetAsync(releaseId);
         }
     }
 }
