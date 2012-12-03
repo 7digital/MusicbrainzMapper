@@ -52,7 +52,7 @@ namespace MusicbrainzMapper
 
             using (var reader = await _command.ExecuteReaderActuallyAsync())
             {
-                while (await reader.ReadAsync())
+                while (reader.Read())
                 {
                     result.Add(reader.GetGuid(0));
                 }
