@@ -32,7 +32,9 @@ namespace MusicbrainzMapper
             _connection = new NpgsqlConnection(ConnectionString);
             _connection.Open();
 
-            _command = new NpgsqlCommand(Query, _connection);
+            _command = _connection.CreateCommand();
+
+            _command.CommandText = Query;
             _command.Parameters.Add(TrackDurations);
             _command.Parameters.Add(NumberTracks);
             _command.Parameters.Add(Fuzziness);
