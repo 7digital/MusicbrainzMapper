@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Threading.Tasks;
 using Npgsql;
 using NpgsqlTypes;
@@ -25,11 +26,10 @@ namespace MusicbrainzMapper
                     AND track_count = :number_tracks;";
 
         //Replace this with your musicbrainz databse setup
-        private const string ConnectionString = "Server=10.0.10.119;Port=5432;User Id=musicbrainz;Password=musicbrainz;Database=musicbrainz_db;";
 
-        public TrackDurationMatcher()
+        public TrackDurationMatcher(string connectionString)
         {
-            _connection = new NpgsqlConnection(ConnectionString);
+            _connection = new NpgsqlConnection(connectionString);
             _connection.Open();
 
             _command = _connection.CreateCommand();
