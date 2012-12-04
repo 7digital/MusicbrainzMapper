@@ -10,12 +10,14 @@ namespace MusicbrainzMapper.Tests
         public async void TaskCreationIsQuickerThanExecution()
         {
             var stopwatch = Stopwatch.StartNew();
-            var taskCompletionTimeTask = ToTest().ContinueWith(task => stopwatch.ElapsedTicks);
+
+            var timingTask = ToTest().ContinueWith(task => stopwatch.ElapsedTicks);
 
             var taskCreationTime = stopwatch.ElapsedTicks;
 
-            stopwatch.Restart();
-            var taskCompletionTime = await taskCompletionTimeTask;
+            var taskCreationAndCompletionTime = await timingTask;
+
+            var taskCompletionTime = taskCreationAndCompletionTime - taskCreationTime;
 
             Assert.That(taskCreationTime, Is.LessThan(taskCompletionTime));
         }
