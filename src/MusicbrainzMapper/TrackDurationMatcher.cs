@@ -54,7 +54,7 @@ namespace MusicbrainzMapper
             {
                 while (reader.Read())
                 {
-                    result.Add(reader.GetGuid(0));
+                    result.Add((Guid) reader["release_id"]);
                 }
             }
             return result;
