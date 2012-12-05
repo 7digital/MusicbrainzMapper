@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using MusicbrainzMapper.Tests.AsyncSanityTests;
 using NUnit.Framework;
 using SevenDigital.Api.Wrapper.Exceptions;
 

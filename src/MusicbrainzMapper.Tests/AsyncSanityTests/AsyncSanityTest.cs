@@ -1,8 +1,8 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using NUnit.Framework;
 
-namespace MusicbrainzMapper.Tests
+namespace MusicbrainzMapper.Tests.AsyncSanityTests
 {
     public abstract class AsyncSanityTest
     {

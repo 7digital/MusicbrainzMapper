@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using MusicbrainzMapper.Tests.AsyncSanityTests;
 using NUnit.Framework;
 
 namespace MusicbrainzMapper.Tests
