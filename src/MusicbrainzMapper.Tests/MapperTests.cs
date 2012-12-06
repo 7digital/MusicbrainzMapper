@@ -19,12 +19,12 @@ namespace MusicbrainzMapper.Tests
         public void CreateMapper()
         {
             _trackDurationService = Substitute.For<ITrackDurationService>();
-            _trackDurationService.GetAsync(Arg.Any<int>())
-                .Returns(Task.FromResult(_trackDurations));
+            _trackDurationService.Get(Arg.Any<int>())
+                .Returns(_trackDurations);
 
             _trackDurationMatcher = Substitute.For<ITrackDurationMatcher>();
-            _trackDurationMatcher.FindMatchesAsync(Arg.Any<IList<int>>())
-                .Returns(Task.FromResult((IList<Guid>) new List<Guid>()));
+            _trackDurationMatcher.FindMatches(Arg.Any<IList<int>>())
+                .Returns(new List<Guid>());
 
             _mapper = new SevenDigitalToMusicBrainzMapper(_trackDurationService, _trackDurationMatcher);
         }
@@ -32,23 +32,23 @@ namespace MusicbrainzMapper.Tests
         [Test]
         public async void TrackDurationServiceIsCalledOnce()
         {
-            await _mapper.MapAsync(SevenDigitalReleaseId);
+            _mapper.Map(SevenDigitalReleaseId);
 
-            _trackDurationService.Received(1).GetAsync(Arg.Any<int>());
+            _trackDurationService.Received(1).Get(Arg.Any<int>());
         }
 
         [Test]
         public async void TrackDurationMatcherIsCalledOnce()
         {
-            await _mapper.MapAsync(SevenDigitalReleaseId);
+            _mapper.Map(SevenDigitalReleaseId);
 
-            _trackDurationMatcher.Received(1).FindMatchesAsync(_trackDurations);
+            _trackDurationMatcher.Received(1).FindMatches(_trackDurations);
         }
 
         [Test]
         public async void WhenMappingA7digitalReleaseidIGetAListOfMusicbrainzids()
         {
-            var result = await _mapper.MapAsync(SevenDigitalReleaseId);
+            var result = _mapper.Map(SevenDigitalReleaseId);
             Assert.That(result, Is.Not.Null);
         }
 

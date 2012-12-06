@@ -51,8 +51,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsyncSanityTests\AsyncSanityTest.cs" />
-    <Compile Include="AsyncSanityTests\AsyncSanityTestTests.cs" />
     <Compile Include="MapperTests.cs" />
     <Compile Include="MusicbrainzMapperIntegrationTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

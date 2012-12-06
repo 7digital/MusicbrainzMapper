@@ -6,6 +6,6 @@ namespace MusicbrainzMapper
 {
     public interface ITrackDurationMatcher
     {
-        Task<IList<Guid>> FindMatchesAsync(IList<int> trackDuration);
+        IList<Guid> FindMatches(IList<int> trackDuration);
     }
 }

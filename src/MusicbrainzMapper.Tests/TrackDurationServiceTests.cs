@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using MusicbrainzMapper.Tests.AsyncSanityTests;
 using NUnit.Framework;
 using SevenDigital.Api.Wrapper.Exceptions;
 
 namespace MusicbrainzMapper.Tests
 {
     [TestFixture]
-    public class TrackDurationServiceTests : AsyncSanityTest
+    public class TrackDurationServiceTests
     {
         private const int ValidReleaseId = 12345;
         private TrackDurationService _service;
@@ -21,7 +20,7 @@ namespace MusicbrainzMapper.Tests
         [Test]
         public async void TrackDurationServiceGetsTrackDurationsForASevenDigitalRelease()
         {
-            var trackDurations = await GetTrackDurations();
+            var trackDurations = GetTrackDurations();
 
             Assert.That(trackDurations, Is.Not.Null);
         }
@@ -32,17 +31,12 @@ namespace MusicbrainzMapper.Tests
         {
             const int invalidReleaseId = 0;
 
-            await _service.GetAsync(invalidReleaseId);
+            _service.Get(invalidReleaseId);
         }
 
-        protected async override Task ToTest()
+        private IList<int> GetTrackDurations()
         {
-            await GetTrackDurations();
-        }
-
-        private async Task<IList<int>> GetTrackDurations()
-        {
-            return await _service.GetAsync(ValidReleaseId);
+            return _service.Get(ValidReleaseId);
         }
     }
 }

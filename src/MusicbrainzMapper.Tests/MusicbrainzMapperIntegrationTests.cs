@@ -11,13 +11,13 @@ namespace MusicbrainzMapper.Tests
         private const string ConnectionString = "Server=10.0.10.119;Port=5432;User Id=musicbrainz;Password=musicbrainz;Database=musicbrainz_db;";
 
         [Test]
-        public async void Maps7dReleaseIdtoMbId()
+        public void Maps7dReleaseIdtoMbId()
         {
             var matcher = new TrackDurationMatcher(ConnectionString);
             var durationService = new TrackDurationService();
             var mapper = new SevenDigitalToMusicBrainzMapper(durationService, matcher);
 
-            var matches = await mapper.MapAsync(RageAgainstTheMachine7dId);
+            var matches = mapper.Map(RageAgainstTheMachine7dId);
 
             Assert.That(matches, Contains.Item(RageAgainstTheMachineMbId));
         }

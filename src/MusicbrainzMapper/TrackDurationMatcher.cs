@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
-using System.Threading.Tasks;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -41,7 +39,7 @@ namespace MusicbrainzMapper
             _command.Parameters["fuzziness"].Value = FuzinessFactor;
         }
 
-        public async Task<IList<Guid>> FindMatchesAsync(IList<int> trackDuration)
+        public IList<Guid> FindMatches(IList<int> trackDuration)
         {
             if (trackDuration.Count == 0)
             {
@@ -52,7 +50,7 @@ namespace MusicbrainzMapper
             _command.Parameters["track_durations"].Value = trackDuration;
             _command.Parameters["number_tracks"].Value = trackDuration.Count;
 
-            using (var reader = await _command.ExecuteReaderActuallyAsync())
+            using (var reader = _command.ExecuteReader())
             {
                 while (reader.Read())
                 {

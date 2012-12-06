@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace MusicbrainzMapper
 {
@@ -15,10 +14,10 @@ namespace MusicbrainzMapper
             _trackDurationMatcher = trackDurationMatcher;
         }
 
-        public async Task<IList<Guid>> MapAsync(int idToMap)
+        public IList<Guid> Map(int idToMap)
         {
-            var tracksDuration = await _trackDurationService.GetAsync(idToMap);
-            var matches = await _trackDurationMatcher.FindMatchesAsync(tracksDuration);
+            var tracksDuration = _trackDurationService.Get(idToMap);
+            var matches = _trackDurationMatcher.FindMatches(tracksDuration);
             return matches;
         }
     }

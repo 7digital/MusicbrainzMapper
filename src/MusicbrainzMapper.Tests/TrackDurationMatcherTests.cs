@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using MusicbrainzMapper.Tests.AsyncSanityTests;
 using NUnit.Framework;
 
 namespace MusicbrainzMapper.Tests
 {
     [TestFixture]
-    public class TrackDurationMatcherTests: AsyncSanityTest
+    public class TrackDurationMatcherTests
     {
         private TrackDurationMatcher _matcher;
         private readonly int[] _validTrackDurations = new[] { 1, 2, 3 };
@@ -20,18 +19,18 @@ namespace MusicbrainzMapper.Tests
         }
 
         [Test]
-        public async void TrackDurationMatcherFetchesNonNullForNonNullInput()
+        public void TrackDurationMatcherFetchesNonNullForNonNullInput()
         {
-            var matches = await GetMatches();
+            var matches = GetMatches();
 
             Assert.That(matches, Is.Not.Null);
         }
 
         [Test]
         [ExpectedException(typeof (ArgumentException))]
-        public async void EmptyTrackDurationListThrowsException()
+        public void EmptyTrackDurationListThrowsException()
         {
-            await _matcher.FindMatchesAsync(new int[0]);
+            _matcher.FindMatches(new int[0]);
         }
 
         [TearDown]
@@ -40,14 +39,9 @@ namespace MusicbrainzMapper.Tests
             _matcher.Dispose();
         }
 
-        protected async override Task ToTest()
+        private IList<Guid> GetMatches()
         {
-            await GetMatches();
-        }
-
-        private async Task<IList<Guid>> GetMatches()
-        {
-            return await _matcher.FindMatchesAsync(_validTrackDurations);
+            return _matcher.FindMatches(_validTrackDurations);
         }
 
     }
