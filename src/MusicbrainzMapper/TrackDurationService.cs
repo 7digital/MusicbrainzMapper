@@ -14,13 +14,12 @@ namespace MusicbrainzMapper
     {
         public IList<int> Get(int releaseId)
         {
-            var releaseTracks =  Api<ReleaseTracks>.Create
-                                                 .ForReleaseId(releaseId)
-                                                 .Please();
-
-            return releaseTracks.Tracks
-                .Select(track => ConvertSecondsToMilliseconds(track.Duration))
-                .ToArray();
+            return Api<ReleaseTracks>.Create
+                                     .ForReleaseId(releaseId)
+                                     .Please()
+                                     .Tracks
+                                     .Select(track => ConvertSecondsToMilliseconds(track.Duration))
+                                     .ToArray();
         }
 
         private static int ConvertSecondsToMilliseconds(int duration)

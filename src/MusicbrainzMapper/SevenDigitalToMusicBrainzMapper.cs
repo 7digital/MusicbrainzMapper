@@ -17,8 +17,7 @@ namespace MusicbrainzMapper
         public IList<Guid> Map(int idToMap)
         {
             var tracksDuration = _trackDurationService.Get(idToMap);
-            var matches = _trackDurationMatcher.FindMatches(tracksDuration);
-            return matches;
+            return _trackDurationMatcher.FindMatches(tracksDuration);
         }
     }
 }
