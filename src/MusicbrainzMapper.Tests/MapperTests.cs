@@ -30,7 +30,7 @@ namespace MusicbrainzMapper.Tests
         }
 
         [Test]
-        public async void TrackDurationServiceIsCalledOnce()
+        public void TrackDurationServiceIsCalledOnce()
         {
             _mapper.Map(SevenDigitalReleaseId);
 
@@ -38,7 +38,7 @@ namespace MusicbrainzMapper.Tests
         }
 
         [Test]
-        public async void TrackDurationMatcherIsCalledOnce()
+        public void TrackDurationMatcherIsCalledOnce()
         {
             _mapper.Map(SevenDigitalReleaseId);
 
@@ -46,7 +46,7 @@ namespace MusicbrainzMapper.Tests
         }
 
         [Test]
-        public async void WhenMappingA7digitalReleaseidIGetAListOfMusicbrainzids()
+        public void WhenMappingA7digitalReleaseidIGetAListOfMusicbrainzids()
         {
             var result = _mapper.Map(SevenDigitalReleaseId);
             Assert.That(result, Is.Not.Null);

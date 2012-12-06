@@ -18,7 +18,7 @@ namespace MusicbrainzMapper.Tests
         }
 
         [Test]
-        public async void TrackDurationServiceGetsTrackDurationsForASevenDigitalRelease()
+        public void TrackDurationServiceGetsTrackDurationsForASevenDigitalRelease()
         {
             var trackDurations = GetTrackDurations();
 
@@ -27,7 +27,7 @@ namespace MusicbrainzMapper.Tests
 
         [Test]
         [ExpectedException(typeof(InvalidResourceException))]
-        public async void InvalidReleaseIdReturnsException()
+        public void InvalidReleaseIdReturnsException()
         {
             const int invalidReleaseId = 0;
 
