@@ -7,13 +7,14 @@ namespace MusicbrainzMapper.Tests
     public class MusicbrainzMapperIntegrationTests
     {
         private SevenDigitalToMusicBrainzMapper _mapper;
+        private MusicbrainzTrackDurationMatcher _trackDurationMatcher;
 
         [TestFixtureSetUp]
         public void SetUp()
         {
-            var matcher = new MusicbrainzTrackDurationMatcher();
             var durationService = new SevenDigitalTrackDurationService();
-            _mapper = new SevenDigitalToMusicBrainzMapper(durationService, matcher);
+            _trackDurationMatcher = new MusicbrainzTrackDurationMatcher();
+            _mapper = new SevenDigitalToMusicBrainzMapper(durationService, _trackDurationMatcher);
         }
 
         [TestCase(287887, "e956c901-acb7-48d6-9dc6-389a5f91f372", "Rage Against The Machine")]
@@ -26,6 +27,12 @@ namespace MusicbrainzMapper.Tests
             var matches = _mapper.Map(sevenDigitalId);
 
             Assert.That(matches, Contains.Item(mbId), string.Format("Could not map {0}", releaseName));
+        }
+
+        [TestFixtureTearDown]
+        public void TearDown()
+        {
+            _trackDurationMatcher.Dispose();
         }
     }
 }
