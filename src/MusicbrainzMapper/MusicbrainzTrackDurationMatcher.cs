@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using Npgsql;
 using NpgsqlTypes;
 
@@ -23,7 +24,8 @@ namespace MusicbrainzMapper
                 WHERE toc <@ create_bounding_cube(:track_durations, :fuzziness)
                     AND track_count = :number_tracks;";
 
-        //Replace this with your musicbrainz databse setup
+        public MusicbrainzTrackDurationMatcher(): this(ConfigurationManager.ConnectionStrings["musicbrainz_db"].ConnectionString)
+        {}
 
         public MusicbrainzTrackDurationMatcher(string connectionString)
         {

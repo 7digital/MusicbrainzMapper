@@ -7,12 +7,11 @@ namespace MusicbrainzMapper.Tests
     public class MusicbrainzMapperIntegrationTests
     {
         private SevenDigitalToMusicBrainzMapper _mapper;
-        private const string ConnectionString = "Server=10.0.10.119;Port=5432;User Id=musicbrainz;Password=musicbrainz;Database=musicbrainz_db;";
 
         [TestFixtureSetUp]
         public void SetUp()
         {
-            var matcher = new MusicbrainzTrackDurationMatcher(ConnectionString);
+            var matcher = new MusicbrainzTrackDurationMatcher();
             var durationService = new SevenDigitalTrackDurationService();
             _mapper = new SevenDigitalToMusicBrainzMapper(durationService, matcher);
         }
