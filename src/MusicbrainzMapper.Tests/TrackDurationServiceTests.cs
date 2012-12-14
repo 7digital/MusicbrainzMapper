@@ -10,12 +10,12 @@ namespace MusicbrainzMapper.Tests
     public class TrackDurationServiceTests : AsyncSanityTest
     {
         private const int ValidReleaseId = 12345;
-        private TrackDurationService _service;
+        private SevenDigitalTrackDurationService _service;
 
         [SetUp]
         public void Setup()
         {
-            _service = new TrackDurationService();
+            _service = new SevenDigitalTrackDurationService();
         }
 
         [Test]

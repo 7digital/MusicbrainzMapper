@@ -6,7 +6,7 @@ using System.Linq;
 
 namespace MusicbrainzMapper
 {
-    public class TrackDurationService : ITrackDurationService
+    public class SevenDigitalTrackDurationService : ITrackDurationService<int>
     {
         public async Task<IList<int>> GetAsync(int releaseId)
         {

@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace MusicbrainzMapper
 {
-    public interface ITrackDurationService
+    public interface ITrackDurationService<in TId>
     {
-        Task<IList<int>> GetAsync(int releaseId);
+        Task<IList<int>> GetAsync(TId releaseId);
     }
 }
