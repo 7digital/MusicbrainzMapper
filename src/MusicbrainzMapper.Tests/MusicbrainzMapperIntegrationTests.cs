@@ -6,20 +6,19 @@ namespace MusicbrainzMapper.Tests
     [TestFixture]
     public class MusicbrainzMapperIntegrationTests
     {
-        private const int RageAgainstTheMachine7dId = 287887;
-        private readonly Guid RageAgainstTheMachineMbId = new Guid("e956c901-acb7-48d6-9dc6-389a5f91f372");
         private const string ConnectionString = "Server=10.0.10.119;Port=5432;User Id=musicbrainz;Password=musicbrainz;Database=musicbrainz_db;";
 
-        [Test]
-        public void Maps7dReleaseIdtoMbId()
+        [TestCase(287887, "e956c901-acb7-48d6-9dc6-389a5f91f372")]
+        public void Maps7dReleaseIdtoMbId(int sevenDigitalId, string musicBrainzId)
         {
+            var mbId = new Guid(musicBrainzId);
             var matcher = new TrackDurationMatcher(ConnectionString);
             var durationService = new TrackDurationService();
             var mapper = new SevenDigitalToMusicBrainzMapper(durationService, matcher);
 
-            var matches = mapper.Map(RageAgainstTheMachine7dId);
+            var matches = mapper.Map(sevenDigitalId);
 
-            Assert.That(matches, Contains.Item(RageAgainstTheMachineMbId));
+            Assert.That(matches, Contains.Item(mbId));
         }
 
     }
