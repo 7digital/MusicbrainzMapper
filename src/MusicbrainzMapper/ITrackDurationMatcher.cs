@@ -1,11 +1,10 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace MusicbrainzMapper
 {
-    public interface ITrackDurationMatcher
+    public interface ITrackDurationMatcher<TId>
     {
-        Task<IList<Guid>> FindMatchesAsync(IList<int> trackDuration);
+        Task<IList<TId>> FindMatchesAsync(IList<int> trackDuration);
     }
 }

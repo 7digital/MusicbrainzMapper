@@ -60,7 +60,7 @@
     <Compile Include="NpgsqlExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SevenDigitalToMusicBrainzMapper.cs" />
-    <Compile Include="TrackDurationMatcher.cs" />
+    <Compile Include="MusicbrainzTrackDurationMatcher.cs" />
     <Compile Include="TrackDurationService.cs" />
   </ItemGroup>
   <ItemGroup>

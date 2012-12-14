@@ -7,7 +7,7 @@ using NpgsqlTypes;
 
 namespace MusicbrainzMapper
 {
-    public class TrackDurationMatcher: ITrackDurationMatcher, IDisposable
+    public class MusicbrainzTrackDurationMatcher: ITrackDurationMatcher<Guid>, IDisposable
     {
         private readonly NpgsqlConnection _connection;
         private readonly NpgsqlCommand _command;
@@ -27,7 +27,7 @@ namespace MusicbrainzMapper
 
         //Replace this with your musicbrainz databse setup
 
-        public TrackDurationMatcher(string connectionString)
+        public MusicbrainzTrackDurationMatcher(string connectionString)
         {
             _connection = new NpgsqlConnection(connectionString);
             _connection.Open();

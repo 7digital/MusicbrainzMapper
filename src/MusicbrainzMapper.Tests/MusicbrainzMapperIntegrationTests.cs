@@ -12,7 +12,7 @@ namespace MusicbrainzMapper.Tests
         [TestFixtureSetUp]
         public void SetUp()
         {
-            var matcher = new TrackDurationMatcher(ConnectionString);
+            var matcher = new MusicbrainzTrackDurationMatcher(ConnectionString);
             var durationService = new TrackDurationService();
             _mapper = new SevenDigitalToMusicBrainzMapper(durationService, matcher);
         }
