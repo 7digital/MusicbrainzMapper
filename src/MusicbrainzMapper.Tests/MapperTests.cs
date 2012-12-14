@@ -9,7 +9,7 @@ namespace MusicbrainzMapper.Tests
     public class MapperTests
     {
         private const int SevenDigitalReleaseId = 12345;
-        private ITrackDurationService _trackDurationService;
+        private ITrackDurationService<int> _trackDurationService;
         private SevenDigitalToMusicBrainzMapper _mapper;
         private ITrackDurationMatcher<Guid> _trackDurationMatcher;
         private readonly IList<int> _trackDurations = new[] { 1, 2, 3 };
@@ -17,7 +17,7 @@ namespace MusicbrainzMapper.Tests
         [SetUp]
         public void CreateMapper()
         {
-            _trackDurationService = Substitute.For<ITrackDurationService>();
+            _trackDurationService = Substitute.For<ITrackDurationService<int>>();
             _trackDurationService.Get(Arg.Any<int>())
                 .Returns(_trackDurations);
 

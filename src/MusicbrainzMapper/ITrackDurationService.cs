@@ -2,8 +2,8 @@ using System.Collections.Generic;
 
 namespace MusicbrainzMapper
 {
-    public interface ITrackDurationService
+    public interface ITrackDurationService<in TId>
     {
-        IList<int> Get(int releaseId);
+        IList<int> Get(TId releaseId);
     }
 }

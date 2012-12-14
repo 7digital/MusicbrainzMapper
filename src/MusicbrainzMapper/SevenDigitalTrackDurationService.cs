@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace MusicbrainzMapper
 {
-    public class TrackDurationService : ITrackDurationService
+    public class SevenDigitalTrackDurationService : ITrackDurationService<int>
     {
         public IList<int> Get(int releaseId)
         {
