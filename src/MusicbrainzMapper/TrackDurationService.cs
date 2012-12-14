@@ -5,11 +5,6 @@ using System.Linq;
 
 namespace MusicbrainzMapper
 {
-    public interface ITrackDurationService
-    {
-        IList<int> Get(int releaseId);
-    }
-
     public class TrackDurationService : ITrackDurationService
     {
         public IList<int> Get(int releaseId)

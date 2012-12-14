@@ -57,6 +57,7 @@
     <Compile Include="ApiCredentials.cs" />
     <Compile Include="ApiUri.cs" />
     <Compile Include="ITrackDurationMatcher.cs" />
+    <Compile Include="ITrackDurationService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SevenDigitalToMusicBrainzMapper.cs" />
     <Compile Include="MusicbrainzTrackDurationMatcher.cs" />
