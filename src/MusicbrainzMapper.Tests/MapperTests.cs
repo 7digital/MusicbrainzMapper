@@ -12,7 +12,7 @@ namespace MusicbrainzMapper.Tests
         private const int SevenDigitalReleaseId = 12345;
         private ITrackDurationService _trackDurationService;
         private SevenDigitalToMusicBrainzMapper _mapper;
-        private ITrackDurationMatcher _trackDurationMatcher;
+        private ITrackDurationMatcher<Guid> _trackDurationMatcher;
         private readonly IList<int> _trackDurations = new[] { 1, 2, 3 };
 
         [SetUp]
@@ -22,7 +22,7 @@ namespace MusicbrainzMapper.Tests
             _trackDurationService.Get(Arg.Any<int>())
                 .Returns(_trackDurations);
 
-            _trackDurationMatcher = Substitute.For<ITrackDurationMatcher>();
+            _trackDurationMatcher = Substitute.For<ITrackDurationMatcher<Guid>>();
             _trackDurationMatcher.FindMatches(Arg.Any<IList<int>>())
                 .Returns(new List<Guid>());
 

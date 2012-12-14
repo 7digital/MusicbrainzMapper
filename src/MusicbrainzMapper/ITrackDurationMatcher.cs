@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
 
 namespace MusicbrainzMapper
 {
-    public interface ITrackDurationMatcher
+    public interface ITrackDurationMatcher<TId>
     {
-        IList<Guid> FindMatches(IList<int> trackDuration);
+        IList<TId> FindMatches(IList<int> trackDuration);
     }
 }

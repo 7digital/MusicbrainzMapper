@@ -6,9 +6,9 @@ namespace MusicbrainzMapper
     public class SevenDigitalToMusicBrainzMapper
     {
         private readonly ITrackDurationService _trackDurationService;
-        private readonly ITrackDurationMatcher _trackDurationMatcher;
+        private readonly ITrackDurationMatcher<Guid> _trackDurationMatcher;
 
-        public SevenDigitalToMusicBrainzMapper(ITrackDurationService trackDurationService, ITrackDurationMatcher trackDurationMatcher)
+        public SevenDigitalToMusicBrainzMapper(ITrackDurationService trackDurationService, ITrackDurationMatcher<Guid> trackDurationMatcher)
         {
             _trackDurationService = trackDurationService;
             _trackDurationMatcher = trackDurationMatcher;
