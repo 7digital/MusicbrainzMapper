@@ -14,7 +14,7 @@ namespace MusicbrainzMapper
                                      .Please()
                                      .Tracks
                                      .Select(track => ConvertSecondsToMilliseconds(track.Duration))
-                                     .ToArray();
+                                     .ToList();
         }
 
         private static int ConvertSecondsToMilliseconds(int duration)
